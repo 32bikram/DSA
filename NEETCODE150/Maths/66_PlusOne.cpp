@@ -9,7 +9,12 @@ public:
             carry = (digits[i]+carry) / 10;
             digits[i] = t;
         }
-        if(carry!=0) digits.insert(digits.begin(), carry);
+        if(carry!=0){
+	    digits.reverse(digits.begin(), digits.end());
+	    digits.push_back(carry);
+	    digits.reverse(digits.begin(), digits.end());
+	    //reverse is inplace unlike insert methode where the vector is copied in new space
+	}
         return digits;
     }
 };
