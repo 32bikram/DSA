@@ -12,6 +12,7 @@ public:
     }
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
         vector<pair<int, vector<int>>> graph (numCourses);
+        //use two data structure when you solve next like i did for last questions in graph
         for(int i = 0; i<prerequisites.size(); i++){
             graph[prerequisites[i][0]].first = -1;
             graph[prerequisites[i][0]].second.push_back(prerequisites[i][1]);
