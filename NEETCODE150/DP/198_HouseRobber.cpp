@@ -20,9 +20,6 @@ public:
         if(nums.size()==1) return nums[0];
         dp_fun(0, nums, dp);
         dp_fun(1, nums, dp);
-        for(int i = 0; i<dp.size(); i++){
-            ans = max(ans, dp[i]);
-        }
-        return ans;
+        return max(dp[0], dp[1]);
     }
 };
