@@ -8,7 +8,7 @@ public:
             if(for_t[c]==0) unique++;
             for_t[c]++;
         }
-        pair<int,int> p = {0,INT_MAX};
+        pair<int,int> p = {0,INT_MAX-1}; //INT_MAX-1 karon jodi 0 index theke suru hoy then max-0+1 overflow korbe tai +1 korar jayga rakhlam
         int done = 0;
         int i = 0, j = 0;
         while(j<s.size()){
@@ -28,7 +28,7 @@ public:
             }
             j++;
         }
-        if(p.second!=INT_MAX) return s.substr(p.first, p.second-p.first+1);
+        if(p.second!=INT_MAX-1) return s.substr(p.first, p.second-p.first+1);
         return "";
     }
 };
