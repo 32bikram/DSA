@@ -43,3 +43,7 @@ There are several essential operations used with heaps:
 
     pop_heap(...);        // moves max/min to the end + fixes heap
     v.pop_back();         // actually removes it
+for min-heap always add ,greater<int>() after vec.end()
+    make_heap(nums1.begin(), nums1.end(), greater<int>());
+    pop_heap(nums1.begin(), nums1.end(), greater<int>());
+    push_heap(nums1.begin(),nums1.end(), greater<int>());
