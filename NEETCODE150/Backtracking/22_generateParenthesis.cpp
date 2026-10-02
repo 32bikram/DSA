@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<string> ans;
     void backtracking(int op, int cp, string &str, int n){
-        if((op == cp) && (op == n)){
+        if(cp==n && op == n){
             ans.push_back(str);
             return;
         }
