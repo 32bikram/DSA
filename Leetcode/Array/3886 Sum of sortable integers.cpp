@@ -2,53 +2,39 @@
 class Solution {
 public:
     int is_sorted(vector<int>& nums, int start, int sze) {
-        int count = 0;
+        int count = 0, idx = start;
 
         for (int i = start; i < start + sze - 1; i++) {
-            if (nums[i] > nums[i + 1]) count++;
+            if (nums[i] > nums[i + 1]) {
+                count++;
+                idx = i + 1;
+            }
         }
 
-        if (sze > 1 && nums[start + sze - 1] > nums[start])
+        if (sze > 1 && nums[start + sze - 1] > nums[start]) {
             count++;
+            idx = start;
+        }
 
-        return count;
+        if (count > 1) return -1;
+
+        return idx;
     }
 
     bool is_sorted_whole(vector<int>& nums, int k) {
-        int prev = INT_MIN;
+        int prev_end = -1;
 
         for (int start = 0; start < nums.size(); start += k) {
-            int count = 0, descent = -1;
+            int idx = is_sorted(nums, start, k);
 
-            for (int i = start; i < start + k - 1; i++) {
-                if (nums[i] > nums[i + 1]) {
-                    count++;
-                    descent = i;
-                }
-            }
+            if (idx == -1) return false;
 
-            if (k > 1 && nums[start + k - 1] > nums[start]) {
-                count++;
-                descent = start + k - 1;
-            }
+            int end_idx = start + (idx - start + k - 1) % k;
 
-            if (count > 1) return false;
+            if (prev_end != -1 && nums[prev_end] > nums[idx])
+                return false;
 
-            int first, last;
-
-            if (count == 1) {
-                first = (descent == start + k - 1)
-                            ? nums[start]
-                            : nums[descent + 1];
-                last = nums[descent];
-            } else {
-                first = nums[start];
-                last = nums[start + k - 1];
-            }
-
-            if (prev > first) return false;
-
-            prev = last;
+            prev_end = end_idx;
         }
 
         return true;
@@ -62,27 +48,24 @@ public:
             if (n % k == 0) divisible.push_back(k);
         }
 
-        int i = 0, j = 0, total_peaks = 0;
+        int i = 0, j = 0;
         bool all_sub_sorted = true;
 
         while (i < divisible.size()) {
             j = divisible[i];
             all_sub_sorted = true;
-            total_peaks = 0;
 
             for (int t = 0; t < nums.size(); t += j) {
-                int peaks = is_sorted(nums, t, j);
+                int idx = is_sorted(nums, t, j);
 
-                if (peaks > 1) {
+                if (idx == -1) {
                     all_sub_sorted = false;
                     break;
                 }
-                else total_peaks += peaks;
             }
 
-            if (all_sub_sorted) {
-                if (is_sorted_whole(nums, j)) ans += j;
-            }
+            if (all_sub_sorted && is_sorted_whole(nums, j))
+                ans += j;
 
             i++;
         }
